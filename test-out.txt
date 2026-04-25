@@ -1,0 +1,17 @@
+﻿
+Running 12 tests using 4 workers
+
+  Γ£ô   1 [chromium] ΓÇ║ e2e\signed-out.spec.ts:32:1 ΓÇ║ "sign in required" hint appears below leaderboard toggle when signed out (3.3s)
+  Γ£ô   3 [chromium] ΓÇ║ e2e\signed-out.spec.ts:24:1 ΓÇ║ header title renders correctly (3.3s)
+  Γ£ô   4 [chromium] ΓÇ║ e2e\signed-out.spec.ts:20:1 ΓÇ║ game board is visible without signing in (3.0s)
+  Γ£ô   2 [chromium] ΓÇ║ e2e\signed-out.spec.ts:38:1 ΓÇ║ opening leaderboard panel while signed out shows locked state, not table (3.6s)
+  Γ£ô   5 [chromium] ΓÇ║ e2e\signed-out.spec.ts:49:1 ΓÇ║ locked leaderboard panel has a visible sign-in button (2.0s)
+  Γ£ô   8 [chromium] ΓÇ║ e2e\signed-out.spec.ts:78:1 ΓÇ║ game cells are clickable while signed out (2.3s)
+  Γ£ô   6 [chromium] ΓÇ║ e2e\signed-out.spec.ts:57:1 ΓÇ║ sign-in button in locked panel starts GitHub OAuth redirect (3.2s)
+  Γ£ô   9 [chromium] ΓÇ║ e2e\signed-out.spec.ts:86:1 ΓÇ║ status bar updates after a move while signed out (1.6s)
+  Γ£ô   7 [chromium] ΓÇ║ e2e\signed-out.spec.ts:68:1 ΓÇ║ closing leaderboard panel hides the locked state (4.4s)
+  Γ£ô  10 [chromium] ΓÇ║ e2e\signed-out.spec.ts:95:1 ΓÇ║ theme toggle works while signed out (2.9s)
+  Γ£ô  11 [chromium] ΓÇ║ e2e\signed-out.spec.ts:108:1 ΓÇ║ difficulty toggle switches between EASY and HARD (2.6s)
+  Γ£ô  12 [chromium] ΓÇ║ e2e\signed-out.spec.ts:123:1 ΓÇ║ reset button resets the board (2.6s)
+
+  12 passed (12.5s)

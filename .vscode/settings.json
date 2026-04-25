@@ -3,6 +3,10 @@
         "npm install": true,
         "Set-ExecutionPolicy": true,
         "npm.cmd": true,
-        "git remote": true
+        "git remote": true,
+        "npx.cmd": true,
+        "npx playwright": true,
+        "ConvertFrom-Json": true,
+        "Out-File": true
     }
 }
