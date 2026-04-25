@@ -1,10 +1,25 @@
+import { useState } from 'react';
 import { useGame } from './hooks/useGame';
+import { useAuth } from './hooks/useAuth';
 import BoardComponent from './components/Board';
 import StatusBar from './components/StatusBar';
 import Controls from './components/Controls';
+import LoginButton from './components/LoginButton';
+import Leaderboard from './components/Leaderboard';
 
 export default function App() {
-  const game = useGame();
+  const { user, loading: authLoading, signIn, signOut } = useAuth();
+  const game = useGame(user?.id ?? null);
+  const [leaderboardTick, setLeaderboardTick] = useState(0);
+  const [showLeaderboard, setShowLeaderboard] = useState(false);
+
+  const username = (user?.user_metadata?.['user_name'] as string | undefined) ?? null;
+  const avatarUrl = (user?.user_metadata?.['avatar_url'] as string | undefined) ?? null;
+
+  function handleReset() {
+    game.resetGame();
+    setLeaderboardTick((t) => t + 1);
+  }
 
   return (
     <div className="app-root" data-theme={game.theme}>
@@ -17,6 +32,27 @@ export default function App() {
           </h1>
           <p className="app-subtitle">VS. MACHINE</p>
         </header>
+
+        <div className="auth-bar">
+          <LoginButton
+            onSignIn={signIn}
+            onSignOut={signOut}
+            loading={authLoading}
+            username={username}
+            avatarUrl={avatarUrl}
+          />
+          <button
+            className={`ctrl-btn ctrl-btn--board ${showLeaderboard ? 'ctrl-btn--active' : ''}`}
+            onClick={() => {
+              setShowLeaderboard((v) => !v);
+              setLeaderboardTick((t) => t + 1);
+            }}
+          >
+            {showLeaderboard ? '[BOARD ▲]' : '[BOARD ▼]'}
+          </button>
+        </div>
+
+        {showLeaderboard && <Leaderboard refreshTrigger={leaderboardTick} />}
 
         <StatusBar
           status={game.status}
@@ -36,10 +72,11 @@ export default function App() {
           difficulty={game.difficulty}
           theme={game.theme}
           onDifficultyChange={game.setDifficulty}
-          onReset={game.resetGame}
+          onReset={handleReset}
           onThemeToggle={game.toggleTheme}
         />
       </div>
     </div>
   );
 }
+

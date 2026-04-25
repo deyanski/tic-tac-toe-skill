@@ -72,7 +72,8 @@ body {
   color: var(--text);
   font-family: 'Share Tech Mono', 'Courier New', monospace;
   transition: background 0.3s ease, color 0.3s ease;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 /* ── App shell ─────────────────────────────────────────────────── */
@@ -433,3 +434,217 @@ body {
   transition-duration: 0.3s;
   transition-timing-function: ease;
 }
+
+/* ── Auth bar ───────────────────────────────────────────────────── */
+
+.auth-bar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.auth-btn {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  padding: 7px 12px;
+  background: var(--btn-bg);
+  color: var(--text);
+  border: 2px solid var(--btn-border);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+
+.auth-btn--signin {
+  border-color: var(--text-dim);
+  color: var(--text-dim);
+}
+
+.auth-btn--signin:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--bg-hover);
+}
+
+.auth-btn--loading {
+  opacity: 0.5;
+  cursor: default;
+  animation: blink 1.2s step-end infinite;
+}
+
+.auth-btn--signout {
+  padding: 4px 8px;
+  font-size: 0.65rem;
+  border-color: var(--text-dim);
+  color: var(--text-dim);
+}
+
+.auth-btn--signout:hover {
+  border-color: var(--o-color);
+  color: var(--o-color);
+}
+
+.auth-user {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.auth-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 0;
+  border: 1px solid var(--text-dim);
+  object-fit: cover;
+}
+
+.auth-username {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--accent);
+  letter-spacing: 0.08em;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Leaderboard ────────────────────────────────────────────────── */
+
+.leaderboard {
+  width: 100%;
+  border: 2px solid var(--border);
+  background: var(--bg-surface);
+  animation: slide-down 0.22s ease forwards;
+}
+
+@keyframes slide-down {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.leaderboard__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.leaderboard__title {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--text-dim);
+}
+
+.leaderboard__refresh {
+  padding: 2px 8px;
+  font-size: 1rem;
+  border-color: var(--text-dim);
+  line-height: 1;
+}
+
+.leaderboard__state {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: var(--text-dim);
+  padding: 16px 12px;
+  text-align: center;
+  animation: blink 1.2s step-end infinite;
+}
+
+.leaderboard__state--error {
+  color: var(--o-color);
+  animation: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.leaderboard__state--empty {
+  animation: none;
+  color: var(--text-dim);
+}
+
+.leaderboard__retry {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  padding: 4px 10px;
+  background: none;
+  border: 1px solid var(--o-color);
+  color: var(--o-color);
+  cursor: pointer;
+}
+
+.leaderboard__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.72rem;
+}
+
+.leaderboard__table th {
+  padding: 6px 8px;
+  text-align: left;
+  color: var(--text-dim);
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  border-bottom: 1px solid var(--border);
+}
+
+.leaderboard__table td {
+  padding: 6px 8px;
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 40%, transparent);
+  color: var(--text);
+}
+
+.leaderboard__table tr:last-child td {
+  border-bottom: none;
+}
+
+.leaderboard__row--top td {
+  color: var(--x-color);
+}
+
+.leaderboard__rank {
+  color: var(--text-dim) !important;
+  width: 24px;
+}
+
+.leaderboard__player {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 140px;
+}
+
+.leaderboard__avatar {
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.leaderboard__name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.leaderboard__wins {
+  color: var(--x-color) !important;
+  font-weight: bold;
+}
+
+.leaderboard__pct {
+  color: var(--accent);
+}
+

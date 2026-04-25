@@ -1,0 +1,14 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Environment variables — NEVER commit real keys
+.env
+.env.local
+.env.*.local
+
+# Editor
+.vscode/settings.json
+.DS_Store

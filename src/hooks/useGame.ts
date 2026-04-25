@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Board, Player, GameStatus, getAvailableMoves, makeMove, getGameResult } from '../game/logic';
 import { getAIMove, Difficulty } from '../game/ai';
+import { supabase } from '../lib/supabase';
 
 const EMPTY_BOARD: Board = [null, null, null, null, null, null, null, null, null];
 const HUMAN: Player = 'X';
@@ -24,7 +25,7 @@ const INITIAL_STATE: GameState = {
   isAITurn: false,
 };
 
-export function useGame() {
+export function useGame(userId: string | null = null) {
   const [difficulty, setDifficulty] = useState<Difficulty>('easy');
   const [theme, setTheme] = useState<'night' | 'day'>(() => {
     try {
@@ -38,9 +39,12 @@ export function useGame() {
 
   // Abort flag prevents stale AI timeouts from writing state after a reset
   const abortRef = useRef(false);
+  // Prevents double-insert in React StrictMode and rapid resets
+  const recordedRef = useRef(false);
 
   const resetGame = useCallback(() => {
     abortRef.current = true;
+    recordedRef.current = false;
     setGame(INITIAL_STATE);
     // Allow new AI turns after React flushes the state update
     setTimeout(() => {
@@ -95,6 +99,24 @@ export function useGame() {
 
     return () => clearTimeout(timer);
   }, [game.isAITurn, game.status, difficulty]);
+
+  // Record completed game to Supabase (silently — never crash the game UI)
+  useEffect(() => {
+    if (game.status === 'playing') return;
+    if (!userId) return;
+    if (recordedRef.current) return;
+    recordedRef.current = true;
+
+    const winnerValue: 'X' | 'O' | 'draw' =
+      game.status === 'draw' ? 'draw' : (game.winner as 'X' | 'O');
+
+    supabase
+      .from('games')
+      .insert({ user_id: userId, winner: winnerValue, difficulty })
+      .then(({ error }) => {
+        if (error) console.warn('[ttt] failed to record game:', error.message);
+      });
+  }, [game.status, game.winner, userId, difficulty]);
 
   const toggleTheme = useCallback(() => {
     setTheme((t) => {
