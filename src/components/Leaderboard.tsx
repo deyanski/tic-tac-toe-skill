@@ -3,14 +3,22 @@ import { supabase, type LeaderboardRow } from '../lib/supabase';
 
 interface LeaderboardProps {
   refreshTrigger: number;
+  enabled?: boolean;
 }
 
-export default function Leaderboard({ refreshTrigger }: LeaderboardProps) {
+export default function Leaderboard({ refreshTrigger, enabled = true }: LeaderboardProps) {
   const [rows, setRows] = useState<LeaderboardRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const fetchLeaderboard = useCallback(async () => {
+    if (!enabled) {
+      setRows([]);
+      setError('SIGN IN REQUIRED TO VIEW LEADERBOARD');
+      setLoading(false);
+      return;
+    }
+
     setLoading(true);
     setError(null);
     const { data, error: err } = await supabase
@@ -18,12 +26,14 @@ export default function Leaderboard({ refreshTrigger }: LeaderboardProps) {
       .select('*');
 
     if (err) {
-      setError('FETCH ERROR — RETRY?');
+      const message = `${err.message}`.toLowerCase();
+      const isAuthError = message.includes('permission denied') || message.includes('jwt') || message.includes('not allowed');
+      setError(isAuthError ? 'SIGN IN REQUIRED TO VIEW LEADERBOARD' : 'FETCH ERROR — RETRY?');
     } else {
       setRows((data as LeaderboardRow[]) ?? []);
     }
     setLoading(false);
-  }, []);
+  }, [enabled]);
 
   useEffect(() => {
     void fetchLeaderboard();
