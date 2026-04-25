@@ -6,11 +6,12 @@ export default defineConfig({
   expect: { timeout: 5_000 },
   fullyParallel: true,
   retries: 0,
-  reporter: 'list',
+  reporter: [['github'], ['html', { open: 'never' }]],
 
   use: {
     baseURL: 'http://localhost:5174',
-    trace: 'on-first-retry',
+    trace: 'retain-on-failure',
+    screenshot: 'only-on-failure',
     headless: true,
   },
 
