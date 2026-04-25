@@ -4,23 +4,8 @@ description: "Repository-level guidance for Copilot and contributors"
 applyTo: "**"
 ---
 
-<!-- Tip: Use /create-instructions in chat to generate content with agent assistance -->
+Primary project config: see AGENTS.md
 
-# Project: tic-tac-toe-premium
-
-## Stack
-- Backend: Node.js, TypeScript, Express
-- Frontend: React, TailwindCSS
-- Deployment: GitHub Pages — hosting
-- GitHub Actions — CI/CD pipeline (test → build → deploy workflow)
-- Testing: Vitest for unit and integration tests
-- Build: Vite
-
-## Skills
-- Before building any UI, read and follow: .github/skills/frontend-design/SKILL.md
-
-## Conventions
-- Always throw AppError, not Error
-
-## What NOT to do
-- Don't install new packages without asking
+## General rules
+- **Dependency rule**: Don't add packages without approval; open an issue/PR.
+- **Test rule**: Run `npm run test` before PRs; CI enforces tests.
